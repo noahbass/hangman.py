@@ -9,10 +9,10 @@ def hangman():
     # get a random word
     response = urllib.request.urlopen('http://randomword.setgetgo.com/get.php').read()
     response = response.decode('utf-8')
+    response = response.strip()
 
-    #print(response)
     # setup the word and the lists
-    word = 'hello'.lower()
+    word = response.lower()
     word_list = []
     guess_list = ['0'] * len(word)
     guess_count = 0
@@ -46,21 +46,19 @@ def hangman():
 
                 print('Letter found!')
             else:
-                print('Letter not found. Try another...')
+                if guess_count < 6:
+                    print('Letter not found. Try another...')
+                    # increase the guess_count
+                    guess_count += 1
+                else:
+                    print('You exceeded the max amount of guesses.')
+                    print('The word was: ', word, '\n')
+                    break
         else:
-            # invalid guess
             print('Invalid guess. Try a letter...')
 
         # show progress
         print('Your progress: ', guess_list, '\n')
-
-        # increase the guess_count
-        if guess_count != 6:
-            guess_count += 1
-        else:
-            print('You exceeded the max amount of guesses.')
-            print('The word was: ', word, '\n')
-            break
     else:
         # word has been guessed
         print('You\'ve correctly guessed the word!')
