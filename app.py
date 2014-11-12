@@ -15,6 +15,7 @@ def hangman():
     word = 'hello'.lower()
     word_list = []
     guess_list = ['0'] * len(word)
+    guess_count = 0
 
     # give a hint
     print('The word is %s characters long. \n' % (len(word)))
@@ -52,6 +53,14 @@ def hangman():
 
         # show progress
         print('Your progress: ', guess_list, '\n')
+
+        # increase the guess_count
+        if guess_count != 6:
+            guess_count += 1
+        else:
+            print('You exceeded the max amount of guesses.')
+            print('The word was: ', word, '\n')
+            break
     else:
         # word has been guessed
         print('You\'ve correctly guessed the word!')
